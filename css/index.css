@@ -601,6 +601,8 @@
             position: relative;
             overflow: hidden;
             cursor: default;
+            display: flex;
+            flex-direction: column;
         }
 
         .service-card::before {
@@ -701,8 +703,9 @@
             color: var(--color-accent);
             font-weight: 600;
             font-size: 0.875rem;
-            opacity: 0;
-            transform: translateX(-8px);
+            margin-top: auto;
+            opacity: 1;
+            transform: none;
             transition: var(--transition);
         }
 
@@ -716,8 +719,7 @@
         }
 
         .service-card:hover .service-card-cta {
-            opacity: 1;
-            transform: translateX(0);
+            color: var(--color-accent-hover);
         }
 
         .service-card-cta:hover svg {
@@ -1799,6 +1801,24 @@
 
             .services-grid {
                 grid-template-columns: 1fr;
+            }
+
+
+            .service-card {
+                padding: 2rem 1.35rem;
+            }
+
+            .service-card-cta {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: center;
+                min-height: 44px;
+                padding: 0.65rem 1rem;
+                border: 1px solid rgba(var(--color-accent-rgb), 0.35);
+                border-radius: 999px;
+                font-size: 0.95rem;
+                font-weight: 700;
+                background: rgba(var(--color-accent-rgb), 0.07);
             }
 
             .contact-grid {
