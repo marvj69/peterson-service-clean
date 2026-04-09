@@ -1,5 +1,6 @@
 import { initMobileNavigation, initNavbarScrollState } from './modules/navigation.js';
 import { createFadeUpObserver } from './modules/scroll-reveal.js';
+import { galleryItems } from './gallery-data.js';
 
 initMobileNavigation({
     collapseWidth: 768
@@ -13,6 +14,25 @@ const { observeElement } = createFadeUpObserver({
     threshold: 0.1,
     rootMargin: '0px 0px -60px 0px'
 });
+
+
+const aboutPhotoImage = document.getElementById('aboutPhotoImage');
+const aboutPhotoCaption = document.getElementById('aboutPhotoCaption');
+
+const selectRandomGalleryItem = () => {
+    if (!aboutPhotoImage || !aboutPhotoCaption || !Array.isArray(galleryItems) || galleryItems.length === 0) {
+        return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * galleryItems.length);
+    const selectedItem = galleryItems[randomIndex];
+
+    aboutPhotoImage.src = selectedItem.src;
+    aboutPhotoImage.alt = selectedItem.alt;
+    aboutPhotoCaption.textContent = selectedItem.note || selectedItem.title || '';
+};
+
+selectRandomGalleryItem();
 
 const googleMapsApiKeyMeta = document.querySelector('meta[name="google-maps-api-key"]');
 const configuredGoogleMapsApiKey = typeof window.PETERSON_GOOGLE_MAPS_API_KEY === 'string'
