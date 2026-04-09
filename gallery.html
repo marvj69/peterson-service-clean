@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peterson Service Gallery | Work Photos</title>
+    <meta name="description" content="Browse Peterson Service project photos covering snow removal, landscaping, excavation, and year-round property work across the Keweenaw area.">
+    <meta name="theme-color" content="#1a2836">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="Peterson Service home">
+                <img src="Assets Peterson/Logo/LOGO.jpg" alt="Peterson Service logo" class="logo-image">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#reviews">Reviews</a></li>
+                <li><a href="gallery.html" class="is-current">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li>
+                    <a href="tel:9062817318" class="nav-cta">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        Call Now
+                    </a>
+                </li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <header class="gallery-hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                        </svg>
+                        Work Photo Gallery
+                    </div>
+                    <h1>See the kind of work that shapes a property season after season.</h1>
+                    <p>From site prep and hardscapes to fencing, utility installs, and winter response, this gallery highlights real Peterson Service projects using photos already captured in the field.</p>
+                    <div class="hero-actions">
+                        <a href="index.html#contact" class="btn btn-primary">Request a Quote</a>
+                        <a href="index.html" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <strong>21</strong>
+                            <span>Curated project photos</span>
+                        </div>
+                        <div class="hero-stat">
+                            <strong>5</strong>
+                            <span>Service categories</span>
+                        </div>
+                        <div class="hero-stat">
+                            <strong>Year-round</strong>
+                            <span>Outdoor property work</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-collage" id="heroCollage" aria-hidden="true"></div>
+            </div>
+        </header>
+
+        <section class="gallery-shell" id="gallery">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <h2>Project Gallery</h2>
+                    </div>
+                    <p id="gallerySummary">Showing all work photos across every service category.</p>
+                </div>
+
+                <div class="filter-toolbar">
+                    <div class="filter-meta">
+                        <p class="filter-label">Browse By Category</p>
+                        <p class="filter-hint">Select a category, then click any photo to open the full image.</p>
+                    </div>
+                    <div class="filter-buttons" id="filterButtons" role="tablist" aria-label="Gallery categories"></div>
+                </div>
+
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+        </section>
+
+        <section class="cta-band">
+            <div class="container">
+                <div class="cta-panel">
+                    <div>
+                        <h2>Have a project in mind?</h2>
+                        <p>Call, text, or send over the details. Whether it is a driveway, a fence line, a septic install, or snow removal, Peterson Service can help map out the next step.</p>
+                    </div>
+                    <div class="cta-actions">
+                        <a href="tel:9062817318" class="btn btn-light">Call (906) 281-7318</a>
+                        <a href="index.html#contact" class="btn btn-ghost">Send Project Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="index.html" class="footer-logo" aria-label="Peterson Service home">
+                    <img src="Assets Peterson/Logo/LOGO.jpg" alt="Peterson Service red logo" class="footer-logo-image">
+                </a>
+                <ul class="footer-links">
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#reviews">Reviews</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Peterson Service L.L.C. All rights reserved.</p>
+                <p>Atlantic Mine, Michigan</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox" hidden>
+        <div class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close photo viewer">
+                <svg viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <div class="lightbox-figure">
+                <img id="lightboxImage" alt="">
+            </div>
+            <div class="lightbox-meta">
+                <div>
+                    <span class="gallery-chip" id="lightboxChip"></span>
+                    <h3 id="lightboxTitle"></h3>
+                    <p id="lightboxDescription"></p>
+                </div>
+                <div class="lightbox-controls">
+                    <button class="lightbox-btn" id="lightboxPrev" aria-label="Previous photo">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </button>
+                    <div class="lightbox-count" id="lightboxCount"></div>
+                    <button class="lightbox-btn" id="lightboxNext" aria-label="Next photo">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/gallery-page.js"></script>
+</body>
+</html>
