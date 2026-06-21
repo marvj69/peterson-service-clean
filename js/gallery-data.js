@@ -2,6 +2,9 @@ export const categoryMeta = {
     hardscape: {
         label: 'Concrete & Hardscapes'
     },
+    lawncare: {
+        label: 'Lawn Care & Grounds'
+    },
     siteprep: {
         label: 'Site Prep & Demo'
     },
@@ -56,6 +59,38 @@ export const galleryItems = [
         category: 'hardscape',
         title: 'Retaining wall entry',
         note: 'Block walls and steps turn a grade change into usable outdoor space.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/facebook-images/558329717_1341403641314932_1704451625729714355_n.jpg',
+        alt: 'Freshly mowed residential lawn with visible striping beside homes and a neighborhood drive.',
+        category: 'lawncare',
+        title: 'Residential lawn striping',
+        note: 'Clean route-style mowing keeps residential yards even, tidy, and curb-ready.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/facebook-images/676678630_1509637894491505_7761937403238870308_n.jpg',
+        alt: 'Zero-turn mower on a freshly cut lakefront lawn bordered by trees.',
+        category: 'lawncare',
+        title: 'Lakefront mowing route',
+        note: 'Recurring lawn care keeps waterfront properties maintained around trees, shade, and open grass.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/facebook-images/678743988_1509641727824455_3813566297802813517_n.jpg',
+        alt: 'Freshly mowed backyard with a stripe pattern behind a home and deck.',
+        category: 'lawncare',
+        title: 'Backyard finish cut',
+        note: 'Routine mowing leaves larger residential yards with a clean, consistent finish.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/facebook-images/500740922_1225476532907644_7523161142664588012_n.jpg',
+        alt: 'Striped lakefront lawn leading toward a red lakeside building and waterfront.',
+        category: 'lawncare',
+        title: 'Lakefront lawn striping',
+        note: 'Straight mowing passes give open waterfront lawns a crisp, finished look.',
         size: 'wide'
     },
     {
