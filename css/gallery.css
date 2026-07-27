@@ -222,21 +222,19 @@
         .facebook-link {
             width: 42px;
             height: 42px;
-            display: grid;
-            place-items: center;
+            display: block;
             border-radius: 50%;
-            background: #1877f2;
             box-shadow: 0 6px 18px rgba(24, 119, 242, 0.22);
             flex-shrink: 0;
+            overflow: hidden;
         }
 
         .facebook-link img {
-            width: 23px;
-            height: 23px;
+            width: 42px;
+            height: 42px;
         }
 
         .facebook-link:hover {
-            background: #0c64d4;
             transform: translateY(-1px);
             box-shadow: 0 10px 24px rgba(24, 119, 242, 0.3);
         }
