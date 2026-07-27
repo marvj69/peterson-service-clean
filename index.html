@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index.css?v=20260727-1">
 </head>
 <body>
 
@@ -277,24 +277,8 @@
 
             <p class="reviews-status" id="reviewsStatus" hidden aria-live="polite"></p>
 
-            <div class="testimonials-carousel fade-up" id="reviewsCarousel" aria-roledescription="carousel" aria-label="Customer reviews">
-                <div class="reviews-carousel-toolbar">
-                    <p class="reviews-carousel-progress" id="reviewsCarouselProgress" aria-live="off">1 / 10</p>
-                    <div class="reviews-carousel-controls">
-                        <button type="button" class="reviews-carousel-button" id="reviewsPrev" aria-label="Show previous review">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </button>
-                        <button type="button" class="reviews-carousel-button" id="reviewsNext" aria-label="Show next review">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M9 18l6-6-6-6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="testimonials-viewport" id="reviewsViewport" tabindex="0">
+            <div class="testimonials-carousel fade-up" id="reviewsCarousel" role="region" aria-roledescription="carousel" aria-label="Customer reviews">
+                <div class="testimonials-viewport" id="reviewsViewport" tabindex="0" aria-label="Review slides. Use left and right arrow keys to navigate.">
                     <div class="testimonials-grid" id="reviewsGrid">
                         <div class="testimonial-card fade-up is-featured" data-review-fallback>
                     <div class="testimonial-stars">
@@ -469,20 +453,36 @@
                     </div>
                 </div>
 
-                <div class="reviews-pagination" id="reviewsPagination" aria-label="Review pagination"></div>
-                <a
-                    class="reviews-leave-link"
-                    href="https://www.google.com/search?q=peterson+service+houghton"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Leave a review on Google"
-                >
-                    Leave a review
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M7 17L17 7"/>
-                        <path d="M8 7h9v9"/>
-                    </svg>
-                </a>
+                <div class="reviews-carousel-toolbar">
+                    <p class="reviews-carousel-progress" id="reviewsCarouselProgress" aria-live="polite">Review 1 of 10</p>
+                    <div class="reviews-carousel-actions">
+                        <div class="reviews-carousel-controls">
+                            <button type="button" class="reviews-carousel-button" id="reviewsPrev" aria-label="Show previous review">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="reviews-carousel-button" id="reviewsNext" aria-label="Show next review">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <a
+                            class="reviews-leave-link"
+                            href="https://www.google.com/search?q=peterson+service+houghton"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Leave a review on Google"
+                        >
+                            Leave a Google review
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 17L17 7"/>
+                                <path d="M8 7h9v9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -658,7 +658,7 @@
             </div>
         </div>
     </footer>
-    <script type="module" src="js/index-page.js"></script>
+    <script type="module" src="js/index-page.js?v=20260727-1"></script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
 </body>

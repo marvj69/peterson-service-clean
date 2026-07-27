@@ -65,16 +65,15 @@ const reviewsViewport = document.getElementById('reviewsViewport');
 const reviewsGrid = document.getElementById('reviewsGrid');
 const reviewsPrev = document.getElementById('reviewsPrev');
 const reviewsNext = document.getElementById('reviewsNext');
-const reviewsPagination = document.getElementById('reviewsPagination');
 const reviewsCarouselProgress = document.getElementById('reviewsCarouselProgress');
 const reviewsReducedMotionQuery = typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
-const REVIEWS_AUTOPLAY_DELAY = 4500;
 let googleMapsScriptPromise;
 let activeReviewIndex = 0;
-let reviewsAutoplayTimer = 0;
 let reviewsScrollFrame = 0;
+let reviewsResizeFrame = 0;
+let expandableReviewCount = 0;
 
 const setReviewsStatus = (message, hidden = false) => {
     if (!reviewsStatus) {
@@ -95,16 +94,6 @@ const observeFadeUpElement = (element) => {
 };
 
 const normalizeReviewText = (value) => (value || '').replace(/\s+/g, ' ').trim();
-const shortenReviewText = (value, maxLength = 420) => {
-    const normalized = normalizeReviewText(value);
-
-    if (normalized.length <= maxLength) {
-        return normalized;
-    }
-
-    return `${normalized.slice(0, maxLength - 3).trimEnd()}...`;
-};
-
 const normalizeMatchText = (value) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const formatRatingValue = (value) => Number.isFinite(value) ? value.toFixed(1) : '5.0';
 const formatReviewCount = (count) => {
@@ -113,55 +102,48 @@ const formatReviewCount = (count) => {
 };
 
 const getReviewSlides = () => reviewsGrid ? Array.from(reviewsGrid.children) : [];
-const getWrappedReviewIndex = (index, slideCount) => {
-    if (!slideCount) {
-        return 0;
-    }
-
-    return ((index % slideCount) + slideCount) % slideCount;
-};
 const getReviewSlideLabel = (slide, index) => {
     const reviewHeading = slide.querySelector('.testimonial-author-info h4')?.textContent?.trim();
 
     return reviewHeading || `Review ${index + 1}`;
 };
 
-const stopReviewsAutoplay = () => {
-    if (!reviewsAutoplayTimer) {
+const enhanceReviewCard = (card, index) => {
+    if (card.dataset.reviewEnhanced === 'true') {
         return;
     }
 
-    window.clearTimeout(reviewsAutoplayTimer);
-    reviewsAutoplayTimer = 0;
-};
+    card.dataset.reviewEnhanced = 'true';
+    card.setAttribute('role', 'group');
+    card.setAttribute('aria-roledescription', 'slide');
 
-const shouldAutoplayReviews = () => {
-    const slides = getReviewSlides();
+    const quote = card.querySelector('.testimonial-quote');
+    const author = card.querySelector('.testimonial-author');
 
-    return Boolean(
-        reviewsCarousel
-        && reviewsViewport
-        && slides.length > 1
-        && !reviewsReducedMotionQuery?.matches
-        && !document.hidden
-    );
-};
-
-const startReviewsAutoplay = () => {
-    stopReviewsAutoplay();
-
-    if (!shouldAutoplayReviews()) {
+    if (!quote || !author || normalizeReviewText(quote.textContent).length < 360) {
         return;
     }
 
-    reviewsAutoplayTimer = window.setTimeout(() => {
-        scrollToReview(activeReviewIndex + 1, 'smooth', { wrap: true });
-        startReviewsAutoplay();
-    }, REVIEWS_AUTOPLAY_DELAY);
-};
+    expandableReviewCount += 1;
+    const quoteId = `review-quote-${index + 1}-${expandableReviewCount}`;
+    const expandButton = document.createElement('button');
 
-const resetReviewsAutoplay = () => {
-    startReviewsAutoplay();
+    quote.id = quoteId;
+    quote.classList.add('is-collapsed');
+    expandButton.type = 'button';
+    expandButton.className = 'testimonial-expand-button';
+    expandButton.textContent = 'Read full review';
+    expandButton.setAttribute('aria-controls', quoteId);
+    expandButton.setAttribute('aria-expanded', 'false');
+    expandButton.addEventListener('click', () => {
+        const isExpanded = expandButton.getAttribute('aria-expanded') === 'true';
+
+        quote.classList.toggle('is-collapsed', isExpanded);
+        expandButton.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+        expandButton.textContent = isExpanded ? 'Read full review' : 'Show less';
+    });
+
+    card.insertBefore(expandButton, author);
 };
 
 const updateReviewsCarouselUi = () => {
@@ -172,29 +154,32 @@ const updateReviewsCarouselUi = () => {
     if (reviewsCarouselProgress) {
         reviewsCarouselProgress.hidden = !hasSlides;
         reviewsCarouselProgress.textContent = hasSlides
-            ? `${activeReviewIndex + 1} / ${slides.length}`
+            ? `Review ${activeReviewIndex + 1} of ${slides.length}`
             : '';
     }
 
     if (reviewsPrev) {
         reviewsPrev.hidden = !hasMultipleSlides;
-        reviewsPrev.disabled = !hasMultipleSlides;
+        reviewsPrev.disabled = !hasMultipleSlides || activeReviewIndex === 0;
     }
 
     if (reviewsNext) {
         reviewsNext.hidden = !hasMultipleSlides;
-        reviewsNext.disabled = !hasMultipleSlides;
+        reviewsNext.disabled = !hasMultipleSlides || activeReviewIndex === slides.length - 1;
     }
 
-    if (!reviewsPagination) {
-        return;
-    }
+    slides.forEach((slide, index) => {
+        const isActiveSlide = index === activeReviewIndex;
 
-    reviewsPagination.hidden = !hasMultipleSlides;
-
-    Array.from(reviewsPagination.children).forEach((dot, index) => {
-        dot.classList.toggle('is-active', index === activeReviewIndex);
-        dot.setAttribute('aria-current', index === activeReviewIndex ? 'true' : 'false');
+        slide.setAttribute('aria-label', `${index + 1} of ${slides.length}: ${getReviewSlideLabel(slide, index)}`);
+        slide.setAttribute('aria-hidden', isActiveSlide ? 'false' : 'true');
+        slide.querySelectorAll('a, button').forEach((control) => {
+            if (isActiveSlide) {
+                control.removeAttribute('tabindex');
+            } else {
+                control.setAttribute('tabindex', '-1');
+            }
+        });
     });
 };
 
@@ -224,18 +209,10 @@ const getClosestReviewIndex = () => {
     return closestIndex;
 };
 
-const scrollToReview = (index, behavior = 'smooth', { wrap = false } = {}) => {
+const scrollToReview = (index, behavior = 'smooth') => {
     const slides = getReviewSlides();
-    const safeIndex = wrap
-        ? getWrappedReviewIndex(index, slides.length)
-        : Math.max(0, Math.min(index, slides.length - 1));
+    const safeIndex = Math.max(0, Math.min(index, slides.length - 1));
     const targetSlide = slides[safeIndex];
-    const shouldJumpAcrossLoop = wrap
-        && slides.length > 1
-        && (
-            (activeReviewIndex === slides.length - 1 && safeIndex === 0)
-            || (activeReviewIndex === 0 && safeIndex === slides.length - 1)
-        );
 
     if (!targetSlide || !reviewsViewport) {
         return;
@@ -248,39 +225,15 @@ const scrollToReview = (index, behavior = 'smooth', { wrap = false } = {}) => {
     activeReviewIndex = safeIndex;
     reviewsViewport.scrollTo({
         left: Math.max(0, targetScrollLeft),
-        behavior: shouldJumpAcrossLoop ? 'auto' : behavior
+        behavior: reviewsReducedMotionQuery?.matches ? 'auto' : behavior
     });
     updateReviewsCarouselUi();
-};
-
-const buildReviewsPagination = () => {
-    const slides = getReviewSlides();
-
-    if (!reviewsPagination) {
-        return;
-    }
-
-    reviewsPagination.innerHTML = '';
-
-    slides.forEach((slide, index) => {
-        const dot = document.createElement('button');
-
-        dot.type = 'button';
-        dot.className = 'reviews-pagination-button';
-        dot.setAttribute('aria-label', `Show ${getReviewSlideLabel(slide, index)}`);
-        dot.addEventListener('click', () => {
-            scrollToReview(index);
-            resetReviewsAutoplay();
-        });
-        reviewsPagination.appendChild(dot);
-    });
 };
 
 const refreshReviewsCarousel = ({ resetIndex = false } = {}) => {
     const slides = getReviewSlides();
 
     if (!reviewsCarousel || !reviewsViewport || !slides.length) {
-        stopReviewsAutoplay();
         updateReviewsCarouselUi();
         return;
     }
@@ -289,11 +242,10 @@ const refreshReviewsCarousel = ({ resetIndex = false } = {}) => {
         activeReviewIndex = 0;
     }
 
-    buildReviewsPagination();
+    slides.forEach((slide, index) => enhanceReviewCard(slide, index));
 
     window.requestAnimationFrame(() => {
         scrollToReview(activeReviewIndex, 'auto');
-        startReviewsAutoplay();
     });
 };
 
@@ -303,8 +255,7 @@ const initializeReviewsCarousel = () => {
     }
 
     const stepReviews = (step) => {
-        scrollToReview(activeReviewIndex + step, 'smooth', { wrap: true });
-        resetReviewsAutoplay();
+        scrollToReview(activeReviewIndex + step);
     };
 
     reviewsPrev?.addEventListener('click', () => {
@@ -341,52 +292,23 @@ const initializeReviewsCarousel = () => {
         if (event.key === 'Home') {
             event.preventDefault();
             scrollToReview(0);
-            resetReviewsAutoplay();
         }
 
         if (event.key === 'End') {
             event.preventDefault();
             scrollToReview(getReviewSlides().length - 1);
-            resetReviewsAutoplay();
         }
     });
-
-    reviewsCarousel.addEventListener('pointerenter', stopReviewsAutoplay);
-    reviewsCarousel.addEventListener('pointerleave', startReviewsAutoplay);
-    reviewsCarousel.addEventListener('focusin', stopReviewsAutoplay);
-    reviewsCarousel.addEventListener('focusout', (event) => {
-        if (!reviewsCarousel.contains(event.relatedTarget)) {
-            startReviewsAutoplay();
-        }
-    });
-
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            stopReviewsAutoplay();
-            return;
-        }
-
-        startReviewsAutoplay();
-    });
-
-    const handleReducedMotionChange = () => {
-        if (reviewsReducedMotionQuery?.matches) {
-            stopReviewsAutoplay();
-            return;
-        }
-
-        startReviewsAutoplay();
-    };
-
-    if (typeof reviewsReducedMotionQuery?.addEventListener === 'function') {
-        reviewsReducedMotionQuery.addEventListener('change', handleReducedMotionChange);
-    } else if (typeof reviewsReducedMotionQuery?.addListener === 'function') {
-        reviewsReducedMotionQuery.addListener(handleReducedMotionChange);
-    }
 
     window.addEventListener('resize', () => {
-        scrollToReview(activeReviewIndex, 'auto');
-        resetReviewsAutoplay();
+        if (reviewsResizeFrame) {
+            return;
+        }
+
+        reviewsResizeFrame = window.requestAnimationFrame(() => {
+            scrollToReview(activeReviewIndex, 'auto');
+            reviewsResizeFrame = 0;
+        });
     });
 
     refreshReviewsCarousel({ resetIndex: true });
@@ -558,7 +480,7 @@ const createReviewCard = (review) => {
         `${review.rating || 0} out of 5 stars`
     );
 
-    quote.textContent = `"${shortenReviewText(review.text)}"`;
+    quote.textContent = `"${normalizeReviewText(review.text)}"`;
 
     if (authorPhotoUri) {
         const authorImage = document.createElement('img');
