@@ -21,6 +21,164 @@ export const categoryMeta = {
 
 export const galleryItems = [
     {
+        src: 'Assets Peterson/recent-work/IMG_20260623_095309.jpg',
+        alt: 'Freshly graded gravel parking area and driveway in front of three garage bays.',
+        category: 'siteprep',
+        title: 'Gravel parking area finish',
+        note: 'A broad parking and turnaround area was shaped for clean access across the full garage frontage.',
+        size: 'wide',
+        featured: true
+    },
+    {
+        src: 'Assets Peterson/recent-work/IMG_20260623_095255.jpg',
+        alt: 'Peterson Service mini excavator positioned beside a small outbuilding before removal.',
+        category: 'siteprep',
+        title: 'Outbuilding removal setup',
+        note: 'Compact equipment makes controlled demolition and cleanup possible in a tight yard.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/recent-work/IMG_20260623_095257.jpg',
+        alt: 'Wide view of a Peterson Service mini excavator positioned beside a small outbuilding.',
+        category: 'siteprep',
+        title: 'Compact demolition access',
+        note: 'The mini excavator is positioned to work around trees, slopes, and nearby structures.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/recent-work/IMG_20260623_095300.jpg',
+        alt: 'Worker inspecting and cleaning a cleared outbuilding site after demolition.',
+        category: 'siteprep',
+        title: 'Site cleanup in progress',
+        note: 'Debris removal and careful ground cleanup prepare the footprint for final grading.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/recent-work/IMG_20260623_095304.jpg',
+        alt: 'Cleared and rough-graded ground after a small outbuilding was removed.',
+        category: 'siteprep',
+        title: 'Cleared building footprint',
+        note: 'The former structure site is opened up, cleaned, and ready for its next use.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260611_132115.jpg',
+        alt: 'Fresh gravel driveway and parking area leading through trees toward a lake.',
+        category: 'siteprep',
+        title: 'Lake-access gravel drive',
+        note: 'Fresh material creates a smooth, dependable approach through a wooded property.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/IMG_20260610_183948-2.jpg',
+        alt: 'Finished gravel driveway leading through a wooded lakefront property.',
+        category: 'siteprep',
+        title: 'Wooded driveway finish',
+        note: 'A clean gravel surface improves access while fitting naturally into the lakefront setting.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260529_144100.jpg',
+        alt: 'New concrete driveway apron beside a detached garage while finish work is underway.',
+        category: 'hardscape',
+        title: 'Garage apron installation',
+        note: 'Fresh concrete creates durable, low-maintenance access between the road and garage.',
+        size: 'standard',
+        featured: true
+    },
+    {
+        src: 'Assets Peterson/recent-work/1064.jpg',
+        alt: 'Stone walkway and landscaped gravel leading toward a Lake Superior shoreline.',
+        category: 'hardscape',
+        title: 'Lakeside stone walkway',
+        note: 'Natural stone and decorative gravel create a defined path through the waterfront landscape.',
+        size: 'tall'
+    },
+    {
+        src: 'Assets Peterson/recent-work/5222a7d5-53d3-4f20-8ec7-c2e44adc5568.jpg',
+        alt: 'Freshly graded driveway base between two homes.',
+        category: 'siteprep',
+        title: 'Driveway base preparation',
+        note: 'A leveled base sets the grade and drainage before the finished driving surface is added.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260513_123708.mp4',
+        poster: 'Assets Peterson/recent-work/20260513_123708-poster.jpg',
+        type: 'video',
+        alt: 'Loader spreading and grading material across a residential driveway.',
+        category: 'siteprep',
+        title: 'Driveway grading in action',
+        note: 'Watch material being spread and shaped into a smooth residential driving surface.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260125_102111.jpg',
+        alt: 'Peterson Service pickup hauling a skid steer on a trailer during winter.',
+        category: 'winter',
+        title: 'Winter equipment mobilization',
+        note: 'The right equipment is moved where it is needed to handle deep snow and demanding sites.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/recent-work/d55a38f7-4b81-4e22-8643-10df28edbf58.jpg',
+        alt: 'Snowplow working through heavy snowfall at night.',
+        category: 'winter',
+        title: 'Plowing through the storm',
+        note: 'Night response continues while snow is still falling to keep routes passable.',
+        size: 'tall'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260111_142538.jpg',
+        alt: 'Two plow trucks staged together on a cleared snowy lot.',
+        category: 'winter',
+        title: 'Plow fleet ready',
+        note: 'Multiple trucks support dependable coverage across residential and commercial routes.',
+        size: 'wide'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260106_071826.jpg',
+        alt: 'Cleared commercial parking lanes beside KFC after heavy snowfall.',
+        category: 'winter',
+        title: 'Commercial lot access',
+        note: 'Driving lanes and entrances stay open so customers and staff can move safely.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260106_071818.jpg',
+        alt: 'Cleared drive-through and parking lanes at KFC after a major snow event.',
+        category: 'winter',
+        title: 'Drive-through snow clearing',
+        note: 'Detailed commercial plowing keeps entrances, exits, and service lanes usable.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260106_071912.jpg',
+        alt: 'Large commercial yard cleared after deep overnight snowfall.',
+        category: 'winter',
+        title: 'Large-lot snow cleanup',
+        note: 'Wide commercial areas are opened and stacked to preserve as much working space as possible.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260106_070701.jpg',
+        alt: 'Cleared entrance and parking area at Remy Battery after heavy snowfall.',
+        category: 'winter',
+        title: 'Business entrance clearing',
+        note: 'Early route work restores access before the business day begins.',
+        size: 'standard'
+    },
+    {
+        src: 'Assets Peterson/recent-work/20260203_110308.mp4',
+        poster: 'Assets Peterson/recent-work/20260203_110308-poster.jpg',
+        type: 'video',
+        alt: 'Snowblower throwing deep snow away from a residential property.',
+        category: 'winter',
+        title: 'Deep-snow cleanup in action',
+        note: 'Watch heavy accumulated snow being moved away from the home and cleared area.',
+        size: 'wide'
+    },
+    {
         src: 'Assets Peterson/662289297_1497134485741846_309736753562425655_n.jpg',
         alt: 'Skid steer beside a garage while retaining blocks and a new approach area are being prepared.',
         category: 'hardscape',

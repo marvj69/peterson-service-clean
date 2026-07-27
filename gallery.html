@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peterson Service Gallery | Work Photos</title>
-    <meta name="description" content="Browse Peterson Service project photos covering lawn care, snow removal, landscaping, excavation, and year-round property work across the Keweenaw area.">
+    <title>Peterson Service Gallery | Work Photos &amp; Videos</title>
+    <meta name="description" content="Browse Peterson Service project photos and videos covering lawn care, snow removal, landscaping, excavation, and year-round property work across the Keweenaw area.">
     <meta name="theme-color" content="#173728">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="site.webmanifest">
@@ -48,18 +48,18 @@
                         <svg viewBox="0 0 24 24">
                             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                         </svg>
-                        Work Photo Gallery
+                        Work Photo &amp; Video Gallery
                     </div>
                     <h1>See the kind of work that shapes a property season after season.</h1>
-                    <p>From lawn care and hardscapes to site prep, fencing, utility installs, and winter response, this gallery highlights real Peterson Service projects using photos already captured in the field.</p>
+                    <p>From lawn care and hardscapes to site prep, fencing, utility installs, and winter response, this gallery highlights real Peterson Service projects captured in the field.</p>
                     <div class="hero-actions">
                         <a href="index.html#contact" class="btn btn-primary">Request a Quote</a>
                         <a href="index.html" class="btn btn-secondary">Back to Home</a>
                     </div>
                     <div class="hero-stats">
                         <div class="hero-stat">
-                            <strong>25</strong>
-                            <span>Curated project photos</span>
+                            <strong id="galleryMediaCount">44</strong>
+                            <span>Project photos &amp; videos</span>
                         </div>
                         <div class="hero-stat">
                             <strong>6</strong>
@@ -87,7 +87,7 @@
                 <div class="filter-toolbar">
                     <div class="filter-meta">
                         <p class="filter-label">Browse By Category</p>
-                        <p class="filter-hint">Select a category, then click any photo to open the full image.</p>
+                        <p class="filter-hint">Select a category, then choose any photo or video to open the full view.</p>
                     </div>
                     <div class="filter-buttons" id="filterButtons" role="tablist" aria-label="Gallery categories"></div>
                 </div>
@@ -124,6 +124,7 @@
                     <li><a href="index.html#reviews">Reviews</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=100063359275364" target="_blank" rel="noopener noreferrer">Facebook</a></li>
                 </ul>
             </div>
             <div class="footer-bottom">
@@ -135,7 +136,7 @@
 
     <div class="lightbox" id="lightbox" hidden>
         <div class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
-            <button class="lightbox-close" id="lightboxClose" aria-label="Close photo viewer">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close media viewer">
                 <svg viewBox="0 0 24 24">
                     <line x1="18" y1="6" x2="6" y2="18"/>
                     <line x1="6" y1="6" x2="18" y2="18"/>
@@ -143,6 +144,7 @@
             </button>
             <div class="lightbox-figure">
                 <img id="lightboxImage" alt="">
+                <video id="lightboxVideo" controls playsinline preload="metadata" hidden></video>
             </div>
             <div class="lightbox-meta">
                 <div>
@@ -151,13 +153,13 @@
                     <p id="lightboxDescription"></p>
                 </div>
                 <div class="lightbox-controls">
-                    <button class="lightbox-btn" id="lightboxPrev" aria-label="Previous photo">
+                    <button class="lightbox-btn" id="lightboxPrev" aria-label="Previous gallery item">
                         <svg viewBox="0 0 24 24">
                             <polyline points="15 18 9 12 15 6"/>
                         </svg>
                     </button>
                     <div class="lightbox-count" id="lightboxCount"></div>
-                    <button class="lightbox-btn" id="lightboxNext" aria-label="Next photo">
+                    <button class="lightbox-btn" id="lightboxNext" aria-label="Next gallery item">
                         <svg viewBox="0 0 24 24">
                             <polyline points="9 18 15 12 9 6"/>
                         </svg>

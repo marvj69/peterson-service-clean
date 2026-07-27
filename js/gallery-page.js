@@ -5,8 +5,10 @@ const heroCollage = document.getElementById('heroCollage');
 const filterButtons = document.getElementById('filterButtons');
 const galleryGrid = document.getElementById('galleryGrid');
 const gallerySummary = document.getElementById('gallerySummary');
+const galleryMediaCount = document.getElementById('galleryMediaCount');
 const lightbox = document.getElementById('lightbox');
 const lightboxImage = document.getElementById('lightboxImage');
+const lightboxVideo = document.getElementById('lightboxVideo');
 const lightboxChip = document.getElementById('lightboxChip');
 const lightboxTitle = document.getElementById('lightboxTitle');
 const lightboxDescription = document.getElementById('lightboxDescription');
@@ -28,11 +30,14 @@ let activeFilter = 'all';
 let visibleItems = [...galleryItems];
 let currentLightboxIndex = 0;
 
+const isVideoItem = item => item.type === 'video';
+const getThumbnailSrc = item => item.poster || item.src;
+
 const buildHeroCollage = () => {
     const featuredItems = galleryItems.filter(item => item.featured).slice(0, 4);
     heroCollage.innerHTML = featuredItems.map(item => `
         <article class="collage-card">
-            <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async">
+            <img src="${getThumbnailSrc(item)}" alt="${item.alt}" loading="lazy" decoding="async">
             <div class="collage-card-copy">
                 <span class="collage-chip">${categoryMeta[item.category].label}</span>
                 <h3>${item.title}</h3>
@@ -46,7 +51,7 @@ const buildFilterButtons = () => {
     const buttons = [
         {
             key: 'all',
-            label: 'All Photos',
+            label: 'All Media',
             count: allCount
         },
         ...orderedCategories.map(key => ({
@@ -80,12 +85,12 @@ const getFilteredItems = () => {
 
 const updateSummary = () => {
     if (activeFilter === 'all') {
-        gallerySummary.textContent = `Showing all ${galleryItems.length} curated work photos across ${orderedCategories.length} service categories.`;
+        gallerySummary.textContent = `Showing all ${galleryItems.length} photos and videos across ${orderedCategories.length} service categories.`;
         return;
     }
 
     const currentLabel = categoryMeta[activeFilter].label;
-    gallerySummary.textContent = `Showing ${visibleItems.length} photos in ${currentLabel}.`;
+    gallerySummary.textContent = `Showing ${visibleItems.length} media items in ${currentLabel}.`;
 };
 
 const renderGallery = () => {
@@ -93,16 +98,26 @@ const renderGallery = () => {
     updateSummary();
     buildFilterButtons();
 
-    galleryGrid.innerHTML = visibleItems.map((item, index) => `
+    galleryGrid.innerHTML = visibleItems.map((item, index) => {
+        const video = isVideoItem(item);
+        const mediaLabel = video ? 'video' : 'photo';
+
+        return `
         <article class="gallery-card card-${item.size || 'standard'}">
             <button
                 type="button"
                 class="gallery-open"
                 data-open-index="${index}"
-                aria-label="Open photo: ${item.title}"
+                aria-label="Open ${mediaLabel}: ${item.title}"
             >
                 <div class="gallery-media">
-                    <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async">
+                    <img src="${getThumbnailSrc(item)}" alt="${item.alt}" loading="lazy" decoding="async">
+                    ${video ? `
+                        <span class="media-type-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19 8 5"/></svg>
+                            Video
+                        </span>
+                    ` : ''}
                 </div>
                 <div class="gallery-copy">
                     <span class="gallery-chip">${categoryMeta[item.category].label}</span>
@@ -110,15 +125,17 @@ const renderGallery = () => {
                     <p>${item.note}</p>
                     <span>
                         <svg viewBox="0 0 24 24">
-                            <circle cx="11" cy="11" r="7"/>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            ${video
+                                ? '<polygon points="8 5 19 12 8 19 8 5"/>'
+                                : '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'}
                         </svg>
-                        View full photo
+                        ${video ? 'Watch video' : 'View full photo'}
                     </span>
                 </div>
             </button>
         </article>
-    `).join('');
+    `;
+    }).join('');
 };
 
 const updateLightbox = () => {
@@ -127,8 +144,26 @@ const updateLightbox = () => {
         return;
     }
 
-    lightboxImage.src = item.src;
-    lightboxImage.alt = item.alt;
+    lightboxVideo.pause();
+    lightboxVideo.removeAttribute('src');
+    lightboxVideo.removeAttribute('poster');
+
+    if (isVideoItem(item)) {
+        lightboxImage.hidden = true;
+        lightboxImage.removeAttribute('src');
+        lightboxVideo.hidden = false;
+        lightboxVideo.src = item.src;
+        lightboxVideo.poster = item.poster || '';
+        lightboxVideo.setAttribute('aria-label', item.alt);
+        lightboxVideo.load();
+    } else {
+        lightboxVideo.hidden = true;
+        lightboxVideo.removeAttribute('aria-label');
+        lightboxImage.hidden = false;
+        lightboxImage.src = item.src;
+        lightboxImage.alt = item.alt;
+    }
+
     lightboxChip.textContent = categoryMeta[item.category].label;
     lightboxTitle.textContent = item.title;
     lightboxDescription.textContent = item.note;
@@ -143,6 +178,7 @@ const openLightbox = (index) => {
 };
 
 const closeLightbox = () => {
+    lightboxVideo.pause();
     lightbox.hidden = true;
     document.body.classList.remove('lightbox-open');
 };
@@ -219,3 +255,7 @@ lightbox.addEventListener('touchend', event => {
 buildHeroCollage();
 buildFilterButtons();
 renderGallery();
+
+if (galleryMediaCount) {
+    galleryMediaCount.textContent = galleryItems.length;
+}

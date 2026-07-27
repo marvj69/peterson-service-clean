@@ -24,8 +24,9 @@ const selectRandomGalleryItem = () => {
         return;
     }
 
-    const randomIndex = Math.floor(Math.random() * galleryItems.length);
-    const selectedItem = galleryItems[randomIndex];
+    const photoItems = galleryItems.filter(item => item.type !== 'video');
+    const randomIndex = Math.floor(Math.random() * photoItems.length);
+    const selectedItem = photoItems[randomIndex];
 
     aboutPhotoImage.src = selectedItem.src;
     aboutPhotoImage.alt = selectedItem.alt;
