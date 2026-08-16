@@ -321,7 +321,7 @@
             overflow: hidden;
             background:
                 linear-gradient(115deg, rgba(8, 22, 15, 0.76) 0%, rgba(8, 22, 15, 0.48) 42%, rgba(8, 22, 15, 0.72) 100%),
-                url("../Assets Peterson/IMG_5966.JPG") center center / cover no-repeat;
+                url("../hero-copper-country.webp") center center / cover no-repeat;
         }
 
         .hero::before {

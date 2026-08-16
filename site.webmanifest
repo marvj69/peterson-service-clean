@@ -1,9 +1,12 @@
 {
+  "id": "/",
   "name": "Peterson Service",
   "short_name": "Peterson",
-  "start_url": "./",
-  "scope": "./",
+  "description": "Year-round property services across Michigan's Copper Country.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "categories": ["business", "home", "utilities"],
   "background_color": "#f3f7f3",
   "theme_color": "#173728",
   "icons": [
